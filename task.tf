@@ -202,7 +202,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = aws_s3_bucket.bucket1.id
+    target_origin_id = aws_s3_bucket.yugal-bucket1.id
 
     forwarded_values {
       query_string = false
