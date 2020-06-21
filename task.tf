@@ -155,8 +155,8 @@ depends_on = [
 }
 
 
-resource "aws_s3_bucket" "yugal-bucket1" {
-  bucket = "my-test-bucket"
+resource "aws_s3_bucket" "yugal-01" {
+  bucket = "my-test-bucket-121"
   
 
   tags = {
@@ -167,32 +167,32 @@ resource "aws_s3_bucket" "yugal-bucket1" {
 
 resource "null_resource" "images_repo"  {
   provisioner "local-exec" {
-    command = "git clone https://github.com/yugal121/HybridCloud.git  image1"
+    command = "git clone https://github.com/yugal121/HybridCloud.git  web"
   }
   provisioner "local-exec" {
   when      = destroy
-    command = "rm -rf image1"
+    command = "rm -rf web"
   }
 }
 
   
-resource "aws_s3_bucket_object" "obj1" {
-  bucket = "${aws_s3_bucket.yugal-bucket1.bucket}"
+resource "aws_s3_bucket_object" "object-01" {
+  bucket = "${aws_s3_bucket.yugal-01.bucket}"
   key    = "VimalSir.jpg"
-  source = "C:/Users/dell/Desktop"
+  source = file("C:/Users/dell/Desktop")
   
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.yugal-bucket1.bucket_regional_domain_name}"
-    origin_id   = aws_s3_bucket.yugal-bucket1.id
+    domain_name = "${aws_s3_bucket.yugal-01.bucket_regional_domain_name}"
+    origin_id   = aws_s3_bucket.yugal-01.id
     
     custom_origin_config {
       http_port              = 80
       https_port             = 1234
       origin_protocol_policy = "match-viewer"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3"]
+      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
   } 
   
@@ -200,9 +200,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   is_ipv6_enabled     = true
   comment             = "Some comment"
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = aws_s3_bucket.yugal-bucket1.id
+    target_origin_id = aws_s3_bucket.yugal-01.id
 
     forwarded_values {
       query_string = false
