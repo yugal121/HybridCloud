@@ -150,17 +150,17 @@ depends_on = [
   ]
 
     provisioner "local-exec" {
-      command = "chrome  ${aws_instance.web.public_ip}"
+      command = "start chrome  ${aws_instance.web.public_ip}"
   	}
 }
 
 
-resource "aws_s3_bucket" "bucket1" {
+resource "aws_s3_bucket" "yugal-bucket1" {
   bucket = "my-test-bucket"
   
 
   tags = {
-    Name        = "My bucket"
+    Name        = "My Yugal"
     Environment = "Dev"
   }
 }
@@ -177,7 +177,7 @@ resource "null_resource" "images_repo"  {
 
   
 resource "aws_s3_bucket_object" "obj1" {
-  bucket = "${aws_s3_bucket.bucket1.bucket}"
+  bucket = "${aws_s3_bucket.yugal-bucket1.bucket}"
   key    = "VimalSir.jpg"
   source = "C:/Users/dell/Desktop"
   
@@ -185,8 +185,8 @@ resource "aws_s3_bucket_object" "obj1" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.bucket1.bucket_regional_domain_name}"
-    origin_id   = aws_s3_bucket.bucket1.id
+    domain_name = "${aws_s3_bucket.yugal-bucket1.bucket_regional_domain_name}"
+    origin_id   = aws_s3_bucket.yugal-bucket1.id
     
     custom_origin_config {
       http_port              = 80
