@@ -157,7 +157,7 @@ depends_on = [
 
 resource "aws_s3_bucket" "yugal-01" {
   bucket = "my-test-bucket-121"
-  
+  acl    = "public-read"
 
   tags = {
     Name        = "My Yugal"
@@ -180,7 +180,7 @@ resource "aws_s3_bucket_object" "object-01" {
   bucket = "${aws_s3_bucket.yugal-01.bucket}"
   key    = "VimalSir.jpg"
   source = "C:/Users/dell/Desktop/VimalSir.jpg"
-  
+  acl    = "public-read"
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
