@@ -179,7 +179,7 @@ resource "null_resource" "images_repo"  {
 resource "aws_s3_bucket_object" "object-01" {
   bucket = "${aws_s3_bucket.yugal-01.bucket}"
   key    = "VimalSir.jpg"
-  source = file("C:/User/dell/Desktop/VimalSir.jpg")
+  source = file("C:/Users/dell/Desktop/VimalSir.jpg")
   
 }
 
